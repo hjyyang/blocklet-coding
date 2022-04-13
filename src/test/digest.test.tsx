@@ -13,7 +13,8 @@ describe("<Digest />", () => {
 	});
 
 	it("digest component render", () => {
+		expect(wrapper.find('[data-test="hash"]').length).toBe(1);
 		wrapper.setProps({ data: { hash: "test" } });
-        expect(wrapper.find('[data-test="hash"]').text()).toEqual("test");
+		expect(wrapper.find('[data-test="hash"]').text()).toEqual("test");
 	});
 });

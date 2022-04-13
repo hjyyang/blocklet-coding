@@ -6,7 +6,7 @@ import Transactions from "./components/transactions";
 
 export default function App() {
 	const [hash, setHash] = useState("");
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<null | { tx: any[] }>(null);
 
 	const onFinish = (values: any) => {
 		blockData(hash)
@@ -32,7 +32,7 @@ export default function App() {
 				onFinish={onFinish}
 				autoComplete="off"
 				style={{ padding: 30 }}
-                data-test="form"
+				data-test="form"
 			>
 				<Form.Item
 					label="Block Hash"
@@ -55,7 +55,7 @@ export default function App() {
 			{data ? (
 				<>
 					<Digest data={data} />
-					<Transactions data={data} />
+					<Transactions data={data?.tx} />
 				</>
 			) : (
 				<Empty />

@@ -1,6 +1,6 @@
 import date from "date-and-time";
 
-export default function Digest({ data }: { data: any }) {
+ function Digest({ data }: { data: any }) {
 	const handleTime = (time: number) => {
 		return time ? date.format(new Date(time * 1000), "YYYY-MM-DD HH:mm") : "";
 	};
@@ -8,7 +8,9 @@ export default function Digest({ data }: { data: any }) {
 		<div className="digest">
 			<div className="item">
 				<div className="title">Hash</div>
-				<div className="content" data-test="hash">{data.hash}</div>
+				<div className="content" data-test="hash">
+					{data.hash}
+				</div>
 			</div>
 			<div className="item">
 				<div className="title">Confirmations</div>
@@ -66,7 +68,9 @@ export default function Digest({ data }: { data: any }) {
 			</div>
 			<div className="item">
 				<div className="title">Block Reward</div>
-				<div className="content">{data?.block_index ? (data?.block_index / 100000000).toFixed(8) + " BTC" : ""}</div>
+				<div className="content">
+					{data?.block_index ? (data?.block_index / 100000000).toFixed(8) + " BTC" : ""}
+				</div>
 			</div>
 			<div className="item">
 				<div className="title">Fee Reward</div>
@@ -75,3 +79,5 @@ export default function Digest({ data }: { data: any }) {
 		</div>
 	);
 }
+
+export default Digest;
