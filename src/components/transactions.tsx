@@ -58,6 +58,7 @@ class Testssss extends React.Component<IProps, IState> {
 										<div className="title">Hash</div>
 										<div className="content">
 											<span data-testid="hash">{item.hash}</span>
+											
 										</div>
 									</div>
 									<div className="col">
@@ -65,7 +66,6 @@ class Testssss extends React.Component<IProps, IState> {
 										<div className="content" style={{ marginLeft: "auto" }}>
 											<span>{date.format(new Date(item.time * 1000), "YYYY-MM-DD HH:mm")}</span>
 										</div>
-										;
 									</div>
 								</div>
 								<div className="row">

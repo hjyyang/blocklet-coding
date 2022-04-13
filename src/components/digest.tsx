@@ -1,15 +1,33 @@
 import date from "date-and-time";
+import type { IDisgestData } from "../App";
 
- function Digest({ data }: { data: any }) {
+function Digest({ data }: { data: IDisgestData }) {
 	const handleTime = (time: number) => {
 		return time ? date.format(new Date(time * 1000), "YYYY-MM-DD HH:mm") : "";
+	};
+	const handleCopy = (hash: string) => {
+		var aux = document.createElement("input");
+		aux.setAttribute("value", hash);
+		document.body.appendChild(aux);
+		aux.select();
+		document.execCommand("copy");
+		document.body.removeChild(aux);
 	};
 	return (
 		<div className="digest">
 			<div className="item">
 				<div className="title">Hash</div>
 				<div className="content" data-test="hash">
-					{data.hash}
+					<span>{data.hash}</span>
+					<svg
+						onClick={() => handleCopy(data.hash)}
+						viewBox="0 0 384 512"
+						height="14px"
+						width="14px"
+						style={{ marginLeft: 5, cursor: "pointer" }}
+					>
+						<path d="M384 112v352c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h80c0-35.29 28.71-64 64-64s64 28.71 64 64h80c26.51 0 48 21.49 48 48zM192 40c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24m96 114v-20a6 6 0 0 0-6-6H102a6 6 0 0 0-6 6v20a6 6 0 0 0 6 6h180a6 6 0 0 0 6-6z"></path>
+					</svg>
 				</div>
 			</div>
 			<div className="item">
@@ -27,7 +45,7 @@ import date from "date-and-time";
 			<div className="item">
 				<div className="title">Miner</div>
 				<div className="content">
-					<a href="">Poolin</a>
+					<a href={"https://www.blockchain.com/btc/address/" + data.addr}>Poolin</a>
 				</div>
 			</div>
 			<div className="item">
