@@ -65,10 +65,6 @@ export default function Digest({ data }: { data: any }) {
 				<div className="content"></div>
 			</div>
 			<div className="item">
-				<div className="title">Transaction Volume</div>
-				<div className="content"></div>
-			</div>
-			<div className="item">
 				<div className="title">Block Reward</div>
 				<div className="content">{data?.block_index ? (data?.block_index / 100000000).toFixed(8) + " BTC" : ""}</div>
 			</div>

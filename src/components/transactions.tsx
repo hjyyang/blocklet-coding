@@ -6,18 +6,17 @@ export default function Transactions({ data }: { data: any }) {
 	const [page, setPage] = useState(1);
 	const [total, setTotal] = useState(0);
 	const [list, setList] = useState([]);
-	const [size, setSize] = useState(5);
 
 	useEffect(() => {
 		if (data && data.tx) {
-			setTotal(Math.ceil(data.tx.length / size));
-			setList(data.tx.slice((page - 1) * size, page * size));
+			setTotal(Math.ceil(data.tx.length / 5));
+			setList(data.tx.slice((page - 1) * 5, page * 5));
 		}
 	}, [data]);
 
 	const handlePagedChange = (page: number, pageSize: number) => {
 		setPage(page);
-		setList(data.tx.slice((page - 1) * size, page * size));
+		setList(data.tx.slice((page - 1) * 5, page * 5));
 	};
 	return (
 		<>
@@ -63,9 +62,9 @@ export default function Transactions({ data }: { data: any }) {
 								<div className="col">
 									<div className="title hide">From</div>
 									<div>
-										{item.inputs.map((row: any) => {
+										{item.inputs.map((row: any, index: number) => {
 											return (
-												<div className="content" style={{ display: "flex" }} key={row.sequence}>
+												<div className="content" style={{ display: "flex" }} key={index}>
 													<span
 														style={{ marginRight: 10, width: "100%" }}
 														className="width270"
@@ -81,12 +80,10 @@ export default function Transactions({ data }: { data: any }) {
 								<div className="col">
 									<div className="title hide">To</div>
 									<div className="content" style={{ marginLeft: "auto" }}>
-										{item.out.map((row:any) => {
+										{item.out.map((row: any, index: number) => {
 											return (
-												<div className="to" style={{ display: "flex" }}>
-													<span style={{ marginRight: 10, width: 350 }}>
-														{row.script}
-													</span>
+												<div className="to" style={{ display: "flex" }} key={index}>
+													<span style={{ marginRight: 10, width: 350 }}>{row.script}</span>
 													<span>{(row?.value / 100000000).toFixed(8)} BTC</span>
 												</div>
 											);
@@ -103,8 +100,9 @@ export default function Transactions({ data }: { data: any }) {
 				total={total}
 				hideOnSinglePage={true}
 				onChange={handlePagedChange}
-				pageSize={size}
+				pageSize={5}
 				current={page}
+                showSizeChanger={false}
 			/>
 		</>
 	);
