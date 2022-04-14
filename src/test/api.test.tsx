@@ -9,9 +9,3 @@ it("get block data successful", async () => {
 it("get block data failure", async () => {
 	await expect(blockData("test")).rejects.toThrow();
 }, 7000);
-
-it("get current block data successful", async () => {
-	await expect(currentBlock("https://blockchain.info/latestblock")).resolves.toMatchObject({
-		data: {},
-	});
-}, 7000);

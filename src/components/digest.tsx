@@ -40,7 +40,7 @@ function Digest({ data }: { data: IDisgestData }) {
 				{new Date(1608620982 * 1000).getMinutes() > 9
 					? new Date(1608620982 * 1000).getMinutes()
 					: "0" + new Date(1608620982 * 1000).getMinutes()}{" "}
-				PM GMT+8 by Poolin. It currently has 69,321 confirmations on the Bitcoin blockchain.
+				PM GMT+8 by Poolin. It currently has {(data.current_block_height - data.height).toLocaleString()} confirmations on the Bitcoin blockchain.
 			</p>
 			<p>
 				The miner(s) of this block earned a total reward of {data.block_reward} ($258,324.44). The reward
@@ -71,7 +71,7 @@ function Digest({ data }: { data: IDisgestData }) {
 				</div>
 				<div className="item">
 					<div className="title">Confirmations</div>
-					<div className="content">{}</div>
+					<div className="content">{(data.current_block_height - data.height).toLocaleString()}</div>
 				</div>
 				<div className="item">
 					<div className="title">Timestamp</div>

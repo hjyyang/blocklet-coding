@@ -21,6 +21,7 @@ export interface IDisgestData {
 	n_tx: number;
 	block_reward: string;
 	transaction_volume: string;
+	current_block_height: number;
 }
 
 export const initDisgest = {
@@ -39,6 +40,7 @@ export const initDisgest = {
 	n_tx: 0,
 	block_reward: "",
 	transaction_volume: "",
+	current_block_height: 0,
 };
 
 export default function App() {
@@ -46,10 +48,11 @@ export default function App() {
 	const [data, setData] = useState<null | { tx: any[] }>(null);
 	const [loading, setLoading] = useState(false);
 	const [disgestData, setDisgestData] = useState<IDisgestData>({ ...initDisgest });
+	const [currentBlockHeight, setCurrentBlockHeight] = useState(0);
 
 	const currentHeight = async () => {
 		const res = await currentBlock();
-		console.log(res);
+		setCurrentBlockHeight(res.data.height);
 	};
 
 	useEffect(() => {
@@ -83,6 +86,8 @@ export default function App() {
 					});
 				});
 				disgestData.transaction_volume = (count - block_reward - res.data.fee) / 100000000 + " BTC";
+				disgestData.current_block_height = currentBlockHeight;
+				console.log(disgestData);
 			})
 			.catch(() => {
 				message.error("Please enter the correct HSAH");
