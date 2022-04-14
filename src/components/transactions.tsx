@@ -26,6 +26,14 @@ class Testssss extends React.Component<IProps, IState> {
 			list: this.props.data.slice((page - 1) * 5, page * 5),
 		});
 	}
+	handleCount(out: any[]) {
+		let value = 0;
+		out.forEach((item) => {
+			value += item.value;
+		});
+		return value;
+	}
+
 	render() {
 		const { list, page, total } = this.state;
 		return (
@@ -49,7 +57,7 @@ class Testssss extends React.Component<IProps, IState> {
 									<div className="col">
 										<div className="title hide">Amount</div>
 										<div className="content btn" style={{ marginLeft: "auto" }}>
-											<span>{(item?.fee / 100000000).toFixed(8)} BTC</span>
+											<span>{(this.handleCount(item.out) / 100000000).toFixed(8)} BTC</span>
 										</div>
 									</div>
 								</div>
@@ -58,7 +66,6 @@ class Testssss extends React.Component<IProps, IState> {
 										<div className="title">Hash</div>
 										<div className="content">
 											<span data-testid="hash">{item.hash}</span>
-											
 										</div>
 									</div>
 									<div className="col">
@@ -93,9 +100,9 @@ class Testssss extends React.Component<IProps, IState> {
 											{item.out.map((row: any, index: number) => {
 												return (
 													<div className="to" style={{ display: "flex" }} key={index}>
-														<span style={{ marginRight: 10, width: 350 }}>
-															{row.script}
-														</span>
+														<a style={{ marginRight: 10, width: 350 }} href={row.addr}>
+															<span>{row.addr}</span>
+														</a>
 														<span>{(row?.value / 100000000).toFixed(8)} BTC</span>
 													</div>
 												);

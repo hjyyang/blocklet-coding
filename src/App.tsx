@@ -1,9 +1,9 @@
 import { Form, Input, Button, message, Empty } from "antd";
 import { blockData } from "./lib/index";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Digest from "./components/digest";
 import Transactions from "./components/transactions";
-
+import { currentBlock } from "./lib/index";
 export interface IDisgestData {
 	[key: string]: any;
 	fee: number;
@@ -17,27 +17,53 @@ export interface IDisgestData {
 	nonce: number;
 	mrkl_root: string;
 	block_index: number;
-    height: number;
+	height: number;
+	n_tx: number;
+	block_reward: string;
+	transaction_volume: string;
 }
+
+export const initDisgest = {
+	fee: 0,
+	hash: "",
+	time: 0,
+	addr: "",
+	bits: 0,
+	size: 0,
+	ver: 0,
+	weight: 0,
+	nonce: 0,
+	mrkl_root: "",
+	block_index: 0,
+	height: 0,
+	n_tx: 0,
+	block_reward: "",
+	transaction_volume: "",
+};
 
 export default function App() {
 	const [hash, setHash] = useState("");
 	const [data, setData] = useState<null | { tx: any[] }>(null);
 	const [loading, setLoading] = useState(false);
-	const [disgestData, setDisgestData] = useState<IDisgestData>({
-		fee: 0,
-		hash: "",
-		time: 0,
-		addr: "",
-		bits: 0,
-		size: 0,
-		ver: 0,
-		weight: 0,
-		nonce: 0,
-		mrkl_root: "",
-		block_index: 0,
-        height: 0
-	});
+	const [disgestData, setDisgestData] = useState<IDisgestData>({ ...initDisgest });
+
+	const currentHeight = async () => {
+		const res = await currentBlock();
+		console.log(res);
+	};
+
+	useEffect(() => {
+		currentHeight();
+	}, []);
+
+	const handleBlockReward = (height: number) => {
+		const count = Math.floor(height / 210000);
+		let reward = 50;
+		for (let i = 0; i < count; i++) {
+			reward = reward / 2;
+		}
+		return reward * 100000000;
+	};
 
 	const onFinish = (values: any) => {
 		setLoading(true);
@@ -47,7 +73,16 @@ export default function App() {
 				Object.keys(disgestData).forEach((item) => {
 					disgestData[item] = res.data[item];
 				});
-				disgestData.addr = "";//res.data.tx[0]
+				disgestData.addr = res.data.tx[0].out[0].addr;
+				const block_reward = handleBlockReward(res.data.height);
+				disgestData.block_reward = (block_reward / 100000000).toFixed(8) + " BTC";
+				let count = 0;
+				res.data.tx.forEach((item: any) => {
+					item.out.forEach((out: any) => {
+						count += out.value;
+					});
+				});
+				disgestData.transaction_volume = (count - block_reward - res.data.fee) / 100000000 + " BTC";
 			})
 			.catch(() => {
 				message.error("Please enter the correct HSAH");

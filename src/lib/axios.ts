@@ -12,6 +12,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     config => {
+        
         return config;
     },
     error => {
