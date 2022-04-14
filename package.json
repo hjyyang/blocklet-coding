@@ -51,8 +51,5 @@
 		"enzyme": "^3.11.0",
 		"enzyme-adapter-react-16": "^1.15.6"
 	},
-	"proxy": "https://blockchain.info",
-	"jest": {
-		"testEnvironment": "node"
-	}
+	"proxy": "https://blockchain.info"
 }
