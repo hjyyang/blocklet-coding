@@ -11,7 +11,7 @@ interface IState {
 	total: number;
 	page: number;
 }
-class Testssss extends React.Component<IProps, IState> {
+class Transactions extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = {
@@ -128,4 +128,4 @@ class Testssss extends React.Component<IProps, IState> {
 	}
 }
 
-export default Testssss;
+export default Transactions;

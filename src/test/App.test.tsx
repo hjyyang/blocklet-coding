@@ -26,5 +26,4 @@ describe("<App />", () => {
 		});
 		expect(wrapper.find('[data-test="input"]').prop("value")).toBe("test");
 	});
-
 });
